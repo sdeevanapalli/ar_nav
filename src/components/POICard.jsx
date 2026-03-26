@@ -1,7 +1,7 @@
 import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { Clock3, MapPinned } from 'lucide-react'
 
-function POICard({ poi, expanded, onToggle }) {
+function POICard({ poi, expanded, onToggle, onGo }) {
   return (
     <Motion.article
       layout
@@ -22,6 +22,16 @@ function POICard({ poi, expanded, onToggle }) {
           </span>
         </div>
       </button>
+
+      <div className="mt-2 flex justify-end">
+        <button
+          type="button"
+          onClick={onGo}
+          className="rounded-full border border-hudGlow/50 bg-hudGlow/10 px-2.5 py-1 text-[10px] font-semibold text-hudGlow"
+        >
+          Go
+        </button>
+      </div>
 
       <AnimatePresence initial={false}>
         {expanded ? (

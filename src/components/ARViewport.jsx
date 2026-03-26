@@ -1,7 +1,7 @@
 import { motion as Motion } from 'framer-motion'
 import ARMarker from './ARMarker'
 
-function ARViewport({ waypoints, arColor }) {
+function ARViewport({ waypoints, arColor, showWaypoints = true, guidanceLabel = 'STRAIGHT 180m' }) {
   return (
     <div className="relative h-full w-full overflow-hidden rounded-2xl border border-hudGlow/20 bg-bgSurface">
       <div className="ar-radial-shift absolute inset-0" />
@@ -47,7 +47,7 @@ function ARViewport({ waypoints, arColor }) {
           animate={{ y: [0, -8, 0], opacity: [0.85, 1, 0.85] }}
           transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
         >
-          STRAIGHT 180m
+          {guidanceLabel}
         </Motion.div>
 
         <Motion.div
@@ -89,11 +89,13 @@ function ARViewport({ waypoints, arColor }) {
         })}
       </svg>
 
-      <div className="absolute inset-0 z-[6]">
-        {waypoints.map((waypoint) => (
-          <ARMarker key={waypoint.id} {...waypoint} color={arColor} />
-        ))}
-      </div>
+      {showWaypoints ? (
+        <div className="absolute inset-0 z-[6]">
+          {waypoints.map((waypoint) => (
+            <ARMarker key={waypoint.id} {...waypoint} color={arColor} />
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }

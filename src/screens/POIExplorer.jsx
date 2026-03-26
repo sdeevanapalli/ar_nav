@@ -1,11 +1,14 @@
 import { motion as Motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import POICard from '../components/POICard'
 import { poiList } from '../data/mockData'
+import { saveStoredDestination } from '../data/navigationStore'
 
 const categories = ['All', 'Food', 'Exits', 'Washrooms', 'Medical', 'Parking']
 
 function POIExplorer() {
+  const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState('All')
   const [expandedId, setExpandedId] = useState(null)
 
@@ -47,6 +50,15 @@ function POIExplorer() {
             key={poi.id}
             poi={poi}
             expanded={expandedId === poi.id}
+            onGo={() => {
+              saveStoredDestination({
+                id: poi.id,
+                name: poi.name,
+                distance: poi.distance,
+                category: poi.category,
+              })
+              navigate('/ar')
+            }}
             onToggle={() =>
               setExpandedId((prev) => {
                 if (prev === poi.id) return null

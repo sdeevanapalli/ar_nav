@@ -1,7 +1,15 @@
 import { motion as Motion } from 'framer-motion'
 import { ChevronsUp, Route, Sparkles } from 'lucide-react'
 
-function BottomSheet() {
+function BottomSheet({ destination }) {
+  const routeTitle = destination
+    ? `Innovation Block → ${destination.name}`
+    : 'Innovation Block → Cafeteria'
+
+  const nextLine = destination
+    ? `Next: ${destination.name} • ${destination.distance} • Follow AR lane`
+    : 'Next: Junction A • 20m • Turn Left'
+
   return (
     <Motion.div
       drag="y"
@@ -18,8 +26,8 @@ function BottomSheet() {
       <div className="flex items-center justify-between">
         <div>
           <p className="font-hud text-xs tracking-[0.2em] text-hudGlow">CURRENT ROUTE</p>
-          <h3 className="mt-1 text-sm font-semibold text-textPrimary">Innovation Block → Cafeteria</h3>
-          <p className="mt-1 text-xs text-textMuted">Next: Junction A • 20m • Turn Left</p>
+          <h3 className="mt-1 text-sm font-semibold text-textPrimary">{routeTitle}</h3>
+          <p className="mt-1 text-xs text-textMuted">{nextLine}</p>
         </div>
         <div className="flex gap-2">
           <span className="rounded-full border border-success/40 bg-success/20 p-2 text-success">

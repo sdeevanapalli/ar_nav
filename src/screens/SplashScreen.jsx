@@ -35,6 +35,23 @@ function SplashScreen() {
 
       <h1 className="font-hud text-4xl tracking-[0.25em] text-hudGlow">AR NAV</h1>
       <p className="mt-3 text-sm text-textMuted">Augmented Navigation System</p>
+
+      <div className="mt-7 flex w-full max-w-xs gap-2">
+        <button
+          type="button"
+          onClick={() => navigate('/ar')}
+          className="w-full rounded-xl border border-hudGlow/50 bg-hudGlow/15 px-4 py-2 text-sm font-semibold text-hudGlow"
+        >
+          Enter AR
+        </button>
+        <button
+          type="button"
+          onClick={() => navigate('/route')}
+          className="w-full rounded-xl border border-white/20 bg-bgSurface/70 px-4 py-2 text-sm font-semibold text-textPrimary"
+        >
+          Route Map
+        </button>
+      </div>
     </Motion.section>
   )
 }
