@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: #0d0d1a;
+  color: #f0f0f0;
+  font-family: Inter, sans-serif;
+}
+
+.ar-radial-shift {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.16), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(26, 115, 232, 0.15), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(0, 200, 83, 0.08), transparent 45%),
+    linear-gradient(130deg, #0d0d1a 15%, #111c27 55%, #16122d 100%);
+  animation: driftBg 14s ease-in-out infinite alternate;
+}
+
+.splash-ring {
+  stroke-dasharray: 302;
+  stroke-dashoffset: 302;
+  animation: loadingRing 2s linear infinite;
+}
+
+@keyframes loadingRing {
+  0% {
+    stroke-dashoffset: 302;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes driftBg {
+  0% {
+    transform: scale(1) translate3d(-1%, -1%, 0);
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    transform: scale(1.05) translate3d(2%, 2%, 0);
+    filter: hue-rotate(15deg);
+  }
+}
