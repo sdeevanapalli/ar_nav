@@ -66,6 +66,21 @@ function ARViewport({ waypoints, arColor, showWaypoints = true, guidanceLabel = 
         >
           LANE OK
         </Motion.div>
+
+        <Motion.div
+          className="absolute left-1/2 top-[57%] z-[5]"
+          animate={{ y: [0, -40, -76], x: [0, 1.5, -1.5] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: 'linear' }}
+        >
+          <div className="holo-walker -translate-x-1/2">
+            <span className="walker-head" />
+            <span className="walker-body" />
+            <span className="walker-arm-left" />
+            <span className="walker-arm-right" />
+            <span className="walker-leg-left" />
+            <span className="walker-leg-right" />
+          </div>
+        </Motion.div>
       </div>
 
       <svg

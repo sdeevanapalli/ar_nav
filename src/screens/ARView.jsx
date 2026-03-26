@@ -1,5 +1,5 @@
 import { motion as Motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ARViewport from '../components/ARViewport'
 import BottomSheet from '../components/BottomSheet'
 import HUDOverlay from '../components/HUDOverlay'
@@ -17,6 +17,45 @@ function ARView() {
   const [showDestinationPopup, setShowDestinationPopup] = useState(Boolean(getStoredDestination()))
 
   const guidanceModes = ['STRAIGHT 180m', 'TURN RIGHT 120m', 'TURN LEFT 90m', 'ARRIVE 40m']
+
+  const activeWaypoints = useMemo(() => {
+    if (!showWaypoints) return []
+
+    if (!activeDestination) return arWaypoints
+
+    const matchingWaypoint = arWaypoints.find((waypoint) =>
+      activeDestination.name.toLowerCase().includes(waypoint.label.toLowerCase()) ||
+      waypoint.label.toLowerCase().includes(activeDestination.name.toLowerCase()),
+    )
+
+    if (matchingWaypoint) {
+      return [
+        {
+          ...matchingWaypoint,
+          distance: activeDestination.distance ?? matchingWaypoint.distance,
+        },
+      ]
+    }
+
+    const typeByCategory = {
+      Food: 'food',
+      Exits: 'exit',
+      Medical: 'medical',
+      Parking: 'facility',
+      Washrooms: 'facility',
+    }
+
+    return [
+      {
+        id: `dest-${activeDestination.id}`,
+        label: activeDestination.name,
+        distance: activeDestination.distance ?? '60m',
+        x: '58%',
+        y: '44%',
+        type: typeByCategory[activeDestination.category] ?? 'facility',
+      },
+    ]
+  }, [activeDestination, showWaypoints])
 
   useEffect(() => {
     const refreshSettings = () => setSettings(getStoredSettings())
@@ -54,9 +93,9 @@ function ARView() {
       transition={{ duration: 0.35 }}
     >
       <ARViewport
-        waypoints={arWaypoints}
+        waypoints={activeWaypoints}
         arColor={settings.arColor}
-        showWaypoints={showWaypoints}
+        showWaypoints={activeWaypoints.length > 0}
         guidanceLabel={guidanceModes[guidanceIndex]}
       />
       {showWindshieldHUD ? <WindshieldHUD /> : null}

@@ -93,6 +93,70 @@ body {
   animation: roadFlow 1.1s linear infinite;
 }
 
+.holo-walker {
+  position: relative;
+  width: 20px;
+  height: 40px;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6));
+}
+
+.holo-walker span {
+  position: absolute;
+  display: block;
+  background: #00e5ff;
+  border-radius: 9999px;
+}
+
+.walker-head {
+  top: 0;
+  left: 8px;
+  width: 5px;
+  height: 5px;
+}
+
+.walker-body {
+  top: 6px;
+  left: 10px;
+  width: 2px;
+  height: 12px;
+}
+
+.walker-arm-left,
+.walker-arm-right {
+  top: 8px;
+  width: 2px;
+  height: 10px;
+  transform-origin: top center;
+}
+
+.walker-arm-left {
+  left: 8px;
+  animation: limbSwingLeft 0.7s ease-in-out infinite;
+}
+
+.walker-arm-right {
+  left: 12px;
+  animation: limbSwingRight 0.7s ease-in-out infinite;
+}
+
+.walker-leg-left,
+.walker-leg-right {
+  top: 18px;
+  width: 2px;
+  height: 14px;
+  transform-origin: top center;
+}
+
+.walker-leg-left {
+  left: 9px;
+  animation: limbSwingRight 0.7s ease-in-out infinite;
+}
+
+.walker-leg-right {
+  left: 11px;
+  animation: limbSwingLeft 0.7s ease-in-out infinite;
+}
+
 @keyframes loadingRing {
   0% {
     stroke-dashoffset: 302;
@@ -163,5 +227,29 @@ body {
   }
   100% {
     stroke-dashoffset: -12;
+  }
+}
+
+@keyframes limbSwingLeft {
+  0% {
+    transform: rotate(22deg);
+  }
+  50% {
+    transform: rotate(-22deg);
+  }
+  100% {
+    transform: rotate(22deg);
+  }
+}
+
+@keyframes limbSwingRight {
+  0% {
+    transform: rotate(-22deg);
+  }
+  50% {
+    transform: rotate(22deg);
+  }
+  100% {
+    transform: rotate(-22deg);
   }
 }
