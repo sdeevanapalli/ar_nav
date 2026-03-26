@@ -1,10 +1,10 @@
 import { motion as Motion } from 'framer-motion'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { ArrowLeft, ArrowRight, ArrowUp, MapPin } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUp, ChevronLeft, ChevronRight, MapPin, Play } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { MapContainer, Marker, Polyline, TileLayer, Tooltip } from 'react-leaflet'
-import { mapMarkers, routeSteps } from '../data/mockData'
+import { destinationRoutes, mapMarkers } from '../data/mockData'
 
 const currentLocation = {
   id: 'current',
@@ -29,14 +29,20 @@ function iconForDirection(direction) {
 
 function RoutePlanner() {
   const [destination, setDestination] = useState(mapMarkers[1])
+  const [activeStepIndex, setActiveStepIndex] = useState(0)
+
+  const activeRoute = useMemo(() => {
+    return destinationRoutes[destination?.name] ?? destinationRoutes.Cafeteria
+  }, [destination])
 
   const routePoints = useMemo(() => {
     if (!destination) return []
-    return [
-      [currentLocation.lat, currentLocation.lng],
-      [destination.lat, destination.lng],
-    ]
-  }, [destination])
+    return activeRoute.pathCoordinates
+  }, [activeRoute, destination])
+
+  const steps = activeRoute.steps
+  const activeStep = steps[activeStepIndex]
+  const progressPercent = ((activeStepIndex + 1) / steps.length) * 100
 
   return (
     <Motion.section
@@ -68,7 +74,12 @@ function RoutePlanner() {
               key={marker.id}
               position={[marker.lat, marker.lng]}
               icon={markerIcon}
-              eventHandlers={{ click: () => setDestination(marker) }}
+              eventHandlers={{
+                click: () => {
+                  setDestination(marker)
+                  setActiveStepIndex(0)
+                },
+              }}
             >
               <Tooltip>{marker.name}</Tooltip>
             </Marker>
@@ -85,16 +96,52 @@ function RoutePlanner() {
           <h2 className="font-hud text-xs tracking-[0.25em] text-hudGlow">ROUTE STEPS</h2>
           <span className="text-xs text-textMuted">To: {destination?.name ?? 'Select marker'}</span>
         </div>
+        <div className="mb-3 rounded-xl border border-hudGlow/25 bg-bgPrimary/70 p-2.5">
+          <p className="text-[11px] text-textMuted">Active Step</p>
+          <p className="mt-1 text-xs text-textPrimary">{activeStep?.instruction}</p>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+            <div className="h-full bg-hudGlow transition-all" style={{ width: `${progressPercent}%` }} />
+          </div>
+          <div className="mt-2 flex gap-2">
+            <button
+              type="button"
+              onClick={() => setActiveStepIndex(0)}
+              className="inline-flex items-center gap-1 rounded-full border border-hudGlow/35 px-2 py-1 text-[10px] text-hudGlow"
+            >
+              <Play size={12} /> Start
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveStepIndex((prev) => Math.max(prev - 1, 0))}
+              className="inline-flex items-center gap-1 rounded-full border border-white/25 px-2 py-1 text-[10px] text-textPrimary"
+            >
+              <ChevronLeft size={12} /> Prev
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveStepIndex((prev) => Math.min(prev + 1, steps.length - 1))}
+              className="inline-flex items-center gap-1 rounded-full border border-white/25 px-2 py-1 text-[10px] text-textPrimary"
+            >
+              Next <ChevronRight size={12} />
+            </button>
+          </div>
+        </div>
         <ul className="max-h-[44vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[65vh]">
-          {routeSteps.map((step) => {
+          {steps.map((step, index) => {
             const StepIcon = iconForDirection(step.direction)
+            const isActive = index === activeStepIndex
             return (
               <li
                 key={step.id}
-                className="flex items-start justify-between rounded-xl border border-white/10 bg-bgPrimary/70 px-3 py-2"
+                className={`flex cursor-pointer items-start justify-between rounded-xl border px-3 py-2 transition ${
+                  isActive
+                    ? 'border-hudGlow/45 bg-hudGlow/10'
+                    : 'border-white/10 bg-bgPrimary/70 hover:border-white/25'
+                }`}
+                onClick={() => setActiveStepIndex(index)}
               >
                 <div className="flex items-start gap-2">
-                  <span className="mt-0.5 text-hudGlow">
+                  <span className={`mt-0.5 ${isActive ? 'text-hudGlow' : 'text-textMuted'}`}>
                     <StepIcon size={14} />
                   </span>
                   <span className="text-xs text-textPrimary">{step.instruction}</span>

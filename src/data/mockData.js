@@ -215,6 +215,65 @@ export const mapMarkers = [
   { id: 4, name: 'Hostel Block', lat: 17.5462, lng: 78.5732, type: 'residence' },
 ]
 
+export const destinationRoutes = {
+  Library: {
+    pathCoordinates: [
+      [17.5449, 78.5718],
+      [17.5451, 78.57165],
+      [17.5453, 78.57145],
+      [17.5455, 78.5712],
+    ],
+    steps: [
+      { id: 1, instruction: 'Head north toward Academic Lane', distance: '35m', direction: 'straight' },
+      { id: 2, instruction: 'Keep left at the amphitheater fork', distance: '20m', direction: 'left' },
+      { id: 3, instruction: 'Continue past the reading lawn', distance: '30m', direction: 'straight' },
+      { id: 4, instruction: 'Arrive at Library entrance', distance: '0m', direction: 'arrive' },
+    ],
+  },
+  Cafeteria: {
+    pathCoordinates: [
+      [17.5449, 78.5718],
+      [17.5448, 78.57205],
+      [17.5446, 78.57218],
+      [17.5444, 78.5723],
+    ],
+    steps: [
+      { id: 1, instruction: 'Walk east along Innovation Block', distance: '28m', direction: 'straight' },
+      { id: 2, instruction: 'Turn right at Student Hub corner', distance: '18m', direction: 'right' },
+      { id: 3, instruction: 'Continue to Food Court corridor', distance: '32m', direction: 'straight' },
+      { id: 4, instruction: 'Arrive at Cafeteria', distance: '0m', direction: 'arrive' },
+    ],
+  },
+  'Main Gate': {
+    pathCoordinates: [
+      [17.5449, 78.5718],
+      [17.5445, 78.5713],
+      [17.5442, 78.5707],
+      [17.5438, 78.5701],
+    ],
+    steps: [
+      { id: 1, instruction: 'Move south toward Admin Plaza', distance: '45m', direction: 'straight' },
+      { id: 2, instruction: 'Turn right near Security Kiosk', distance: '22m', direction: 'right' },
+      { id: 3, instruction: 'Follow the boulevard to Gate Road', distance: '55m', direction: 'straight' },
+      { id: 4, instruction: 'Arrive at Main Gate', distance: '0m', direction: 'arrive' },
+    ],
+  },
+  'Hostel Block': {
+    pathCoordinates: [
+      [17.5449, 78.5718],
+      [17.5452, 78.5722],
+      [17.5457, 78.5727],
+      [17.5462, 78.5732],
+    ],
+    steps: [
+      { id: 1, instruction: 'Head northeast to Shuttle Walkway', distance: '40m', direction: 'straight' },
+      { id: 2, instruction: 'Turn left at Hostel Junction', distance: '25m', direction: 'left' },
+      { id: 3, instruction: 'Proceed on Residential Path', distance: '48m', direction: 'straight' },
+      { id: 4, instruction: 'Arrive at Hostel Block', distance: '0m', direction: 'arrive' },
+    ],
+  },
+}
+
 export const mockSettings = {
   units: 'meters',
   voiceGuidance: true,
