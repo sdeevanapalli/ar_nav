@@ -1,15 +1,16 @@
 import { motion as Motion } from 'framer-motion'
 import { CheckCircle2, Volume2 } from 'lucide-react'
 import { useState } from 'react'
-import { mockSettings } from '../data/mockData'
+import { getStoredSettings, saveStoredSettings } from '../data/settingsStore'
 
 const swatches = ['#00E5FF', '#FF4D6D', '#00C853', '#FFD600', '#FFFFFF']
 
 function Settings() {
-  const [settings, setSettings] = useState(mockSettings)
+  const [settings, setSettings] = useState(getStoredSettings())
   const [saved, setSaved] = useState(false)
 
   const saveSettings = () => {
+    saveStoredSettings(settings)
     setSaved(true)
     setTimeout(() => setSaved(false), 1800)
   }
@@ -57,7 +58,7 @@ function Settings() {
           >
             <span className="flex items-center gap-2 text-textPrimary">
               <Volume2 size={16} className="text-hudGlow" />
-              Enabled
+              {settings.voiceGuidance ? 'Enabled' : 'Disabled'}
             </span>
             <span
               className={`relative h-6 w-11 rounded-full transition ${

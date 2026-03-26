@@ -1,11 +1,27 @@
 import { motion as Motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import ARViewport from '../components/ARViewport'
 import BottomSheet from '../components/BottomSheet'
 import HUDOverlay from '../components/HUDOverlay'
 import WindshieldHUD from '../components/WindshieldHUD'
-import { arWaypoints, mockSettings } from '../data/mockData'
+import { arWaypoints } from '../data/mockData'
+import { getStoredSettings } from '../data/settingsStore'
 
 function ARView() {
+  const [settings, setSettings] = useState(getStoredSettings())
+
+  useEffect(() => {
+    const refreshSettings = () => setSettings(getStoredSettings())
+
+    window.addEventListener('storage', refreshSettings)
+    window.addEventListener('app-settings-updated', refreshSettings)
+
+    return () => {
+      window.removeEventListener('storage', refreshSettings)
+      window.removeEventListener('app-settings-updated', refreshSettings)
+    }
+  }, [])
+
   return (
     <Motion.section
       className="relative h-full w-full px-3 pb-28 pt-3 lg:px-6 lg:pb-24 lg:pt-5"
@@ -13,7 +29,7 @@ function ARView() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <ARViewport waypoints={arWaypoints} arColor={mockSettings.arColor} />
+      <ARViewport waypoints={arWaypoints} arColor={settings.arColor} />
       <WindshieldHUD />
 
       <div className="pointer-events-none absolute bottom-32 left-9 hidden rounded-2xl border border-hudGlow/20 bg-bgSurface/65 px-4 py-3 backdrop-blur-md lg:block">
