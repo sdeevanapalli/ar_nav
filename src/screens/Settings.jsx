@@ -16,13 +16,13 @@ function Settings() {
 
   return (
     <Motion.section
-      className="h-full overflow-y-auto px-3 pb-28 pt-3"
+      className="h-full overflow-y-auto px-3 pb-28 pt-3 lg:px-6 lg:pb-20 lg:pt-5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
       style={{ fontSize: `${settings.fontSize}px` }}
     >
-      <div className="space-y-3">
+      <div className="space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
         <div className="rounded-2xl border border-white/10 bg-bgSurface/80 p-4">
           <p className="font-hud text-xs tracking-[0.2em] text-hudGlow">UNITS</p>
           <div className="mt-3 inline-flex rounded-full border border-white/15 bg-bgPrimary/70 p-1 text-sm">
@@ -114,7 +114,7 @@ function Settings() {
       <button
         type="button"
         onClick={saveSettings}
-        className="mt-4 w-full rounded-xl bg-accentBlue px-4 py-3 font-semibold text-white"
+        className="mt-4 w-full rounded-xl bg-accentBlue px-4 py-3 font-semibold text-white lg:ml-auto lg:mt-5 lg:w-auto lg:min-w-56"
       >
         Save Preferences
       </button>

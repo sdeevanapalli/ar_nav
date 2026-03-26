@@ -16,12 +16,12 @@ function POIExplorer() {
 
   return (
     <Motion.section
-      className="h-full px-3 pb-24 pt-3"
+      className="h-full px-3 pb-24 pt-3 lg:px-6 lg:pb-20 lg:pt-5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <div className="mb-3 flex gap-2 overflow-x-auto pb-1">
+      <div className="mb-3 flex gap-2 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-x-visible">
         {categories.map((category) => (
           <button
             key={category}
@@ -41,7 +41,7 @@ function POIExplorer() {
         ))}
       </div>
 
-      <div className="grid max-h-[78vh] grid-cols-2 gap-3 overflow-y-auto pr-1">
+      <div className="grid max-h-[78vh] grid-cols-2 gap-3 overflow-y-auto pr-1 lg:max-h-[70vh] lg:grid-cols-3 xl:grid-cols-4">
         {filtered.map((poi) => (
           <POICard
             key={poi.id}

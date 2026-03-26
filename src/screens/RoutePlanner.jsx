@@ -40,12 +40,12 @@ function RoutePlanner() {
 
   return (
     <Motion.section
-      className="flex h-full flex-col px-3 pb-24 pt-3"
+      className="grid h-full grid-rows-[48%_1fr] gap-3 px-3 pb-24 pt-3 lg:grid-cols-2 lg:grid-rows-1 lg:px-6 lg:pb-20 lg:pt-5"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
     >
-      <div className="h-[48%] overflow-hidden rounded-2xl border border-white/10">
+      <div className="h-full overflow-hidden rounded-2xl border border-white/10">
         <MapContainer
           center={[17.5449, 78.5718]}
           zoom={16}
@@ -80,12 +80,12 @@ function RoutePlanner() {
         </MapContainer>
       </div>
 
-      <div className="mt-3 rounded-2xl border border-white/10 bg-bgSurface/80 p-3">
+      <div className="h-full rounded-2xl border border-white/10 bg-bgSurface/80 p-3">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-hud text-xs tracking-[0.25em] text-hudGlow">ROUTE STEPS</h2>
           <span className="text-xs text-textMuted">To: {destination?.name ?? 'Select marker'}</span>
         </div>
-        <ul className="max-h-[34vh] space-y-2 overflow-y-auto pr-1">
+        <ul className="max-h-[44vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[65vh]">
           {routeSteps.map((step) => {
             const StepIcon = iconForDirection(step.direction)
             return (
